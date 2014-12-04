@@ -1,0 +1,6 @@
+syntax: glob
+Makefile.dependencies
+*~
+*.o
+*.a
+.cache

@@ -1,0 +1,7 @@
+data/threads/ostreamlock.cc.i
+data/threads/thread-utils.cc.i
+data/.hgignore.i
+data/threads/semaphore.cc.i
+data/random/random-generator.cc.i
+data/random/Makefile.i
+data/threads/Makefile.i

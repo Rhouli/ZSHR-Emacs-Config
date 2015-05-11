@@ -1,1 +1,0 @@
-Removed unique_lock, added on-thread-exit version of signal

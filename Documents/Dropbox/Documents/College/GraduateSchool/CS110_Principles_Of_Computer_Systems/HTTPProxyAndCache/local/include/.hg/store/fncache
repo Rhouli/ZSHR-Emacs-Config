@@ -1,8 +1,0 @@
-data/thread-pool-solution.h.i
-data/exit-utils.h.i
-data/semaphore.h.i
-data/random-generator.h.i
-data/ostreamlock.h.i
-data/string-utils.h.i
-data/sleep-utils.h.i
-data/thread-utils.h.i

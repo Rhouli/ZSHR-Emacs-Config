@@ -1,0 +1,73 @@
+git clone https://github.com/alexott/ecb.git
+git clone git://github.com/ramblex/emacs-textmate.git
+
+sudo apt-get install python-software-properties  # for add-apt-repository
+sudo add-apt-repository ppa:ubuntu-elisp/ppa
+sudo apt-get update
+sudo apt-get install emacs-snapshot
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+sudo apt-get install g++-4.8 clang-3.4 libclang-3.4-dev
+sudo apt-get install git cmake liblua5.2-dev libmpfr-dev libgmp-dev make
+
+M-x package-install irony
+M-x package-install irony-eldoc
+M-x package-install flycheck-irony
+M-x package-install company-irony
+M-x package-install helm
+
+M-x irony-install-server
+Important: To force irony-server to use llvm-3.4, you need to add cmake options 
+-DLIBCLANG_INCLUDE_DIR=/usr/lib/llvm-3.4/include and -DLIBCLANG_LIBRARY=/usr/lib/llvm-3.4/lib/libclang-3.4.so
+
+
+Emacs Mail: http://www.djcbsoftware.nl/code/mu/mu4e/Keybindings.html#Keybindings
+$ sudo apt-get install libgmime-2.6-dev libxapian-dev
+# if libgmime-2.6-dev is not available, try libgmime-2.4-dev
+# get emacs 23 or 24 if you don't have it yet
+$ sudo apt-get install emacs24
+# optional
+$ sudo apt-get install guile-2.0-dev html2text xdg-utils
+# optional: only needed for msg2pdf and mug (toy gtk+ frontend)
+$ sudo apt-get install libwebkit-dev
+$ git clone git://github.com/djcb/mu.git
+$ cd mu
+$ autoreconf -i && ./configure && make
+# On the BSDs: use gmake instead of make
+$ sudo make install
+$ sudo apt-get install offlineimap
+
+:::::: ~/.offlineimaprc ::::::
+[general]
+accounts = personal
+ui = ttyui
+
+[Account personal]
+localrepository = personal-local
+remoterepository = personal-remote
+status_backend = sqlite
+
+[Repository personal-local]
+type = Maildir
+localfolders = ~/Mail/personal
+# Spaces in pathname are bad. Lets use `archive` which is a simple word
+# Besides, we only need `All Mail` folder. 
+# Sup would manage mails on its own.
+# If your GMail language setting is not English, you can execute 
+# `offlineimap --info` to find out the name of folder which is 
+# translated and encoded after your account is configured.
+nametrans = lambda folder: {'archive': '[Gmail]/All Mail',}.get(folder, folder)
+
+[Repository personal-remote]
+# IMAP with hardcoded GMail config
+type = Gmail
+# The path of ca-certfile might be different on your system.
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+# Remember that GMail requires full mail address as username
+remoteuser = ryan.houlihan90@gmail.com	 
+remotepass = PASSWORD
+nametrans = lambda folder: {'[Gmail]/All Mail': 'archive',}.get(folder, folder)
+folderfilter = lambda folder: folder == '[Gmail]/All Mail'
+# Or, if you have a lot of mail and don't want to wait for a long time before
+# using sup, you can archive all your old mails on Gmail and only sync the
+# inbox with the following line replacing the previous `folderfilter` line:
+# folderfilter = lambda folder: folder == 'INBOX'
